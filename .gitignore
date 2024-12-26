@@ -2,3 +2,6 @@
 /data
 /.tiknib_cache
 /*_output
+*.pyc
+*/*.pyc
+*/*/*.pyc
