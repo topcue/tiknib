@@ -1,5 +1,6 @@
-IDA_PATH="/home/dongkwan/.tools/ida-7.6"
-IDA_FETCH_FUNCDATA="/home/dongkwan/tiknib/tiknib/ida/fetch_funcdata_v7.5.py"
+IDA_PATH="/mnt/c/Users/user/ida/ida_7.7"
+IDA_FETCH_FUNCDATA="/mnt/c/Users/user/ida/ida_7.7/tiknib/ida/fetch_funcdata_v7.5.py"
 
-TIKNIB_REPO="/home/dongkwan/tiknib"
-BINKIT_DATASET="/home/dongkwan/binkit-dataset"
+TIKNIB_REPO="/home/topcue/tiknib"
+BINKIT_DATASET="/mnt/c/Users/user/dataset/spell"
+

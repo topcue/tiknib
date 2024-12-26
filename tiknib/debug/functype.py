@@ -193,7 +193,13 @@ def update_type_map(type_map, ctags_fname):
             if typeref:
                 ret_type = typeref.split(":")[0]
             else:
+                if name not in pattern:
+                    if "::" in name:
+                        name = name.split("::")[-1]
+                # print(name, '####', pattern)
+                # print(pattern.rindex(name))
                 ret_type = pattern[: pattern.rindex(name)].rstrip()
+            # print("ret_type:", ret_type)
         else:
             status = tag.next(entry)
             continue

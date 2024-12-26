@@ -134,6 +134,7 @@ def calc_metric_helper(func_key):
     # Testing all functions takes too much time, so we select one true
     # positive and one true negative function for each function.
     for src_opt, src_func in func_data.items():
+        print(src_opt)
         # select one tp function.
         ## below random.choice may work faster than list filtering.
         # while True:
@@ -155,7 +156,8 @@ def calc_metric_helper(func_key):
         dst_opt = random.choice(candidates)
         tp_func = func_data[dst_opt]
 
-        # select one tn function
+        ##! select one tn function
+        cnt = 0
         while True:
             func_tn_key = random.choice(g_func_keys)
             # Since difference binaries may have an equal function, pick a
@@ -165,6 +167,21 @@ def calc_metric_helper(func_key):
                 if dst_opt in g_funcs[func_tn_key]:
                     tn_func = g_funcs[func_tn_key][dst_opt]
                     break
+                else:
+                    pass
+                    # print("!!", dst_opt)
+                    # print("??", g_funcs[func_tn_key].keys())
+                    if dst_opt not in g_funcs[func_tn_key].keys():
+                        # print(cnt)
+                        cnt += 1
+                        if cnt == 100000:
+                            dst_opt = random.choice(list(g_funcs[func_tn_key].keys()))
+                            print(dst_opt)
+                            tn_func = g_funcs[func_tn_key][dst_opt]
+                            break
+                    # print("dst_opt", dst_opt)
+                    # print("g_funcs[func_tn_key]:", g_funcs[func_tn_key])
+
         assert not np.isnan(src_func).any()
         assert not np.isnan(tp_func).any()
         assert not np.isnan(tn_func).any()
@@ -187,6 +204,7 @@ def calc_metric_helper(func_key):
         tp_results = np.vstack(tp_results)
     if tn_results:
         tn_results = np.vstack(tn_results)
+    print(func_key)
     return func_key, tp_results, tn_results, target_opts
 
 
@@ -582,8 +600,11 @@ def do_test(opts):
         # ===================== testing ======================
         t0 = time.time()
         logger.info("testing ...")
+        print("call calc_metric()")
         test_keys, test_tps, test_tns, test_opts = calc_metric(test_funcs, test_funcs_strs, dst_options)
+        print("calc_metric() done.")
         test_roc, test_ap = calc_results(test_tps, test_tns, selected_feature_indices)
+        print("calc_results() done")
         test_time = time.time() - t0
         logger.info(
             "test results: %d features, roc: %0.4f, ap: %0.4f",

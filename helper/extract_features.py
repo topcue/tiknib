@@ -14,6 +14,8 @@ import coloredlogs
 logger = logging.getLogger(__name__)
 coloredlogs.install(level=logging.INFO)
 
+global_bins = set()
+
 # TODO: make a configuration file to set features to extract
 # TODO: implement merging features for comparing inline functions
 # TODO: add features per basic block
@@ -22,6 +24,19 @@ def extract_features(bin_name):
     global feature_funcs
     # TODO: handle suffix correctly.
     bin_name, func_data_list = load_func_data(bin_name, suffix="filtered")
+    for d in func_data_list:
+        win_bin_path = d["bin_path"]
+        # print(win_bin_path)
+        tmp_bin_name = win_bin_path.split("\\")[-1]
+        print(tmp_bin_name)
+        new_bin_path = ""
+        for global_bin_path in global_bins:
+            if global_bin_path.endswith(tmp_bin_name):
+                print(global_bin_path)
+                new_bin_path = global_bin_path
+        d["bin_path"] = new_bin_path
+            
+    
     fm = FeatureManager()
     for func_data in func_data_list:
         try:
@@ -79,6 +94,9 @@ if __name__ == "__main__":
     if opts.debug:
         bins = [bins[0]]
     t0 = time.time()
+    
+    global_bins = set(bins)
+
     logger.info("Processing %d binaries ...", len(bins))
     do_multiprocess(
         extract_features,
