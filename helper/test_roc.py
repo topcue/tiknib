@@ -134,6 +134,7 @@ def calc_metric_helper(func_key):
     # Testing all functions takes too much time, so we select one true
     # positive and one true negative function for each function.
     for src_opt, src_func in func_data.items():
+        ##! My
         print(src_opt)
         # select one tp function.
         ## below random.choice may work faster than list filtering.
@@ -156,6 +157,7 @@ def calc_metric_helper(func_key):
         dst_opt = random.choice(candidates)
         tp_func = func_data[dst_opt]
 
+        ##! My
         ##! select one tn function
         cnt = 0
         while True:
@@ -167,6 +169,7 @@ def calc_metric_helper(func_key):
                 if dst_opt in g_funcs[func_tn_key]:
                     tn_func = g_funcs[func_tn_key][dst_opt]
                     break
+                ##! My
                 else:
                     pass
                     # print("!!", dst_opt)

@@ -14,6 +14,7 @@ import coloredlogs
 logger = logging.getLogger(__name__)
 coloredlogs.install(level=logging.INFO)
 
+##! My:
 global_bins = set()
 
 # TODO: make a configuration file to set features to extract
@@ -24,6 +25,8 @@ def extract_features(bin_name):
     global feature_funcs
     # TODO: handle suffix correctly.
     bin_name, func_data_list = load_func_data(bin_name, suffix="filtered")
+
+    ##! My:
     for d in func_data_list:
         win_bin_path = d["bin_path"]
         # print(win_bin_path)
@@ -35,8 +38,8 @@ def extract_features(bin_name):
                 print(global_bin_path)
                 new_bin_path = global_bin_path
         d["bin_path"] = new_bin_path
-            
-    
+    ##! ===
+
     fm = FeatureManager()
     for func_data in func_data_list:
         try:
@@ -94,7 +97,8 @@ if __name__ == "__main__":
     if opts.debug:
         bins = [bins[0]]
     t0 = time.time()
-    
+
+    ##! My:
     global_bins = set(bins)
 
     logger.info("Processing %d binaries ...", len(bins))
